@@ -6,7 +6,9 @@ Workflow if you're going to do a workshop:
 
 
 cd web
+
 C:\openSourceProjects\2nd\rpsAppCamarillo\web>npm install
+
 C:\openSourceProjects\2nd\rpsAppCamarillo\web>npm run compile-test
 
 
