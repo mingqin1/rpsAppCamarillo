@@ -7,11 +7,21 @@ const ReactTestUtils = require("react-dom/test-utils")
 class PlayForm extends React.Component {
     constructor(){
         super()
-        this.state = {message: ""}
+        this.state = {message: "", player1: "", player2: ""};
+        this. handleChangePlayer1= this. handleChangePlayer1.bind(this);
+        this. handleChangePlayer2= this. handleChangePlayer2.bind(this);
     }
 
+    handleChangePlayer1(event) {
+        this.setState({player1: event.target.value});
+
+    }
+
+    handleChangePlayer2(event) {
+        this.setState({player2: event.target.value});
+    }
     handlePlay(){
-        this.props.requests.playRound("input 1 placeholder", "input 2 placeholder", this)
+        this.props.requests.playRound(this.state.player1, this.state.player2, this)
     }
 
     tie(){
@@ -34,7 +44,10 @@ class PlayForm extends React.Component {
         return (
             <div>
                 <div>{this.state.message}</div>
-                <input type="text" name="p1Throw"/>
+                {/*<input type="text" name="p1Throw" onChange={(event) => {this.state.player1 = event.target.value}}/>*/}
+                {/*<input type="text" name="p2Throw" onChange={(event) => {this.state.player2 = event.target.value}}/>*/}
+                {<input type="text" name="p1Throw" onChange={this.handleChangePlayer1}/>}
+                {<input type="text" name="p2Throw" onChange={this.handleChangePlayer2}/>}
                 <button onClick={this.handlePlay.bind(this)}>Submit</button>
             </div>
         )
@@ -50,7 +63,7 @@ describe("PlayForm", function () {
         cleanUpDOM();
     })
 
-    describe("when receives the input", function () {
+    fdescribe("when receives the input", function () {
         it("passes the correct input to the rps module", function () {
             let playRoundSpy = jasmine.createSpy()
             let requests = {
@@ -60,11 +73,16 @@ describe("PlayForm", function () {
             renderPlayForm(requests);
 
             // fill rock
-            let input = domFixture.querySelector("[name='p1Throw']")
-            input.value = "rock"
-            ReactTestUtils.Simulate.change(input)
+            let input1 = domFixture.querySelector("[name='p1Throw']")
+            input1.value = "rock"
+            ReactTestUtils.Simulate.change(input1)
 
             // fill in sailboat
+            let input2 = domFixture.querySelector("[name='p2Throw']")
+            input2.value = "sailboat"
+            ReactTestUtils.Simulate.change(input2)
+
+
 
 
             // click button
@@ -158,6 +176,15 @@ describe("PlayForm", function () {
         document.querySelector("button").click()
     }
 })
+
+
+
+
+
+
+
+
+
 
 
 
